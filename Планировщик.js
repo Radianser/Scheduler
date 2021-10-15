@@ -1,15 +1,25 @@
 let executors = [
-{"id":1,"username":"user1","surname":"Петров","firstName":"Иван","secondName":""},
-{"id":2,"username":"user2","surname":"Иванов","firstName":"Пётр","secondName":""},
-{"id":3,"username":"user3","surname":"Васильев","firstName":"Артём","secondName":""},
-{"id":4,"username":"user4","surname":"Кузнецов","firstName":"Сергей","secondName":""},
-{"id":5,"username":"user5","surname":"Некрасов","firstName":"Артём","secondName":""}];
+{"id":1,"surname":"Петров","firstName":"Иван"},
+{"id":2,"surname":"Иванов","firstName":"Пётр"},
+{"id":3,"surname":"Васильев","firstName":"Артём"},
+{"id":4,"surname":"Кузнецов","firstName":"Сергей"},
+{"id":5,"surname":"Некрасов","firstName":"Артём"}
+];
 let tasks = [
-{"id":"f0e0b21f-49cc-44ae-af04-ff3760c9fbdb","subject":"Анализ","description":"Анализировать всякие штуки","creationAuthor":1,"executor":1,"creationDate":"2021-10-08","planStartDate":"2021-10-08","planEndDate":"2021-10-12","endDate":"2021-10-08","status":1,"order":1},
-{"id":"55fbab6e-aa6a-441e-be13-d942be820a46","subject":"Планирование","description":"Планировать всякие штуки","creationAuthor":1,"executor":1,"creationDate":"2021-10-08","planStartDate":"2021-10-11","planEndDate":"2021-10-12","endDate":"2021-10-08","status":1,"order":1},
-{"id":"ec5f8238-1eba-4b70-adea-78a26aaa7b09","subject":"Проектирование","description":"Проектировать всякие штуки","creationAuthor":1,"executor":2,"creationDate":"2021-10-08","planStartDate":"2021-10-12","planEndDate":"2021-10-13","endDate":"2021-10-08","status":1,"order":1},
-{"id":"c81f932e-40cc-42ed-b191-b5e133c614ff","subject":"Разработка","description":"Разрабатывать всякие штуки","creationAuthor":1,"executor":3,"creationDate":"2021-10-08","planStartDate":"2021-10-12","planEndDate":"2021-10-15","endDate":"2021-10-08","status":1,"order":1},
-{"id":"a3722b0d-5f72-411a-9afd-85a393fb00bc","subject":"Тестирование","description":"Тестировать всякие штуки","creationAuthor":1,"executor":null,"creationDate":"2021-10-08","planStartDate":"2021-10-14","planEndDate":"2021-10-15","endDate":"2021-10-08","status":1,"order":1}];
+{"id":"f0e0b21f-49cc-44ae-af04-ff3760c9fbdb","subject":"Анализ","description":"Анализировать всякие штуки","executor":1,"planStartDate":"2021-10-19","planEndDate":"2021-10-21"},
+{"id":"55fbab6e-aa6a-441e-be13-d942be820a46","subject":"Планирование","description":"Планировать всякие штуки","executor":1,"planStartDate":"2021-10-21","planEndDate":"2021-10-23"},
+{"id":"ec5f8238-1eba-4b70-adea-78a26aaa7b09","subject":"Проектирование","description":"Проектировать всякие штуки","executor":2,"planStartDate":"2021-10-20","planEndDate":"2021-10-22"},
+{"id":"181f932e-40cc-42ed-b191-b5e133c614ff","subject":"Разработка","description":"Разрабатывать всякие штуки","executor":4,"planStartDate":"2021-10-19","planEndDate":"2021-10-21"},
+{"id":"281f932e-40cc-42ed-b191-b5e133c614ff","subject":"Чтение","description":"Читать всякие штуки","executor":4,"planStartDate":"2021-10-21","planEndDate":"2021-10-23"},
+{"id":"381f932e-40cc-42ed-b191-b5e133c614ff","subject":"Вождение","description":"Водить всякие штуки","executor":4,"planStartDate":"2021-10-24","planEndDate":"2021-10-26"},
+{"id":"481f932e-40cc-42ed-b191-b5e133c614ff","subject":"Бег","description":"Бегать по всяким штукам","executor":2,"planStartDate":"2021-10-22","planEndDate":"2021-10-24"},
+{"id":"581f932e-40cc-42ed-b191-b5e133c614ff","subject":"Сон","description":"Спать на всяких штуках","executor":5,"planStartDate":"2021-10-22","planEndDate":"2021-10-24"},
+{"id":"681f932e-40cc-42ed-b191-b5e133c614ff","subject":"Пение","description":"Петь всякие штуки","executor":5,"planStartDate":"2021-10-24","planEndDate":"2021-10-26"},
+{"id":"781f932e-40cc-42ed-b191-b5e133c614ff","subject":"Хождение","description":"Ходить по всяким штукам","executor":3,"planStartDate":"2021-10-23","planEndDate":"2021-10-25"},
+{"id":"881f932e-40cc-42ed-b191-b5e133c614ff","subject":"Покупать","description":"Покупать всякие штуки","executor":null,"planStartDate":"2021-10-22","planEndDate":"2021-10-24"},
+{"id":"a3722b0d-5f72-411a-9afd-85a393fb00bc","subject":"Тестирование","description":"Тестировать всякие штуки","executor":null,"planStartDate":"2021-10-24","planEndDate":"2021-10-26"}
+];
+
 let body = document.querySelector('body');
 let backlog = document.querySelector('#backlog');
 mobileCheck();
