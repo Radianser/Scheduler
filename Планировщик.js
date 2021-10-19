@@ -22,14 +22,29 @@ let tasks = [
 
 let body = document.querySelector('body');
 let backlog = document.querySelector('#backlog');
-mobileCheck();
 
-let cells = document.querySelector('.cells');						//Создаем все ячейки таблицы
+mobileCheck();
+function mobileCheck() {							//Функция проверки размера экрана (таймер для отслеживания изменений в реальном времени)
+	setInterval(asd,0);
+}
+function asd() {
+	let wrapper = document.querySelector('#wrapper');
+	if (body.clientWidth <= 1024) {
+		backlog.style.cssText += "display: none;";
+		wrapper.style.cssText += "width: 100%;";
+	}
+	if (body.clientWidth > 1024) {
+		backlog.style.cssText += "display: block;";
+		wrapper.style.cssText += "width: 70vw;";
+	}
+}
+
+let weeks = document.querySelector('.weeks');					//Создаем все ячейки таблицы
 for (let i = 0; i <= executors.length; i++) {
 	for (let j = 0; j < 8; j++) {
 		let tmp = document.createElement('div');
 		tmp.setAttribute('class', 'taskCells');
-		cells.appendChild(tmp);
+		weeks.appendChild(tmp);
 	}
 }
 
@@ -38,7 +53,7 @@ for (let i = 0; i < 8; i++) {
 	taskCells[i].setAttribute('class', 'daysCells');
 }
 
-let divs = document.querySelectorAll('.cells div');					//Назначаем ячейки имен
+let divs = document.querySelectorAll('.weeks div');				//Назначаем ячейки имен
 for (let i = 8; i < divs.length; i += 8) {
 	divs[i].setAttribute('class', 'namesCells');
 }
@@ -55,6 +70,19 @@ daysCells = document.querySelectorAll('.daysCells');
 for (let i = 0; i < daysCells.length; i++) {
 	daysCells[i].innerHTML = fillDate(i);
 }
+function fillDate(i) {								//Функция заполнения первоначальной даты
+	let data = new Date();
+	let year = data.getFullYear();
+	let month = data.getMonth()+1;
+	let date = data.getDate()+i;
+	return (year+"-"+addZero(month)+"-"+addZero(date));
+}
+function addZero(n) {								//Функция по добавления нуля перед однозначными датами
+	if (n < 10) {
+		n = "0" + n;
+	}
+	return n;
+}
 
 taskCells = document.querySelectorAll('.taskCells');				//Добавляем всем ячейкам дней атрибут executor
 for (let i = 0; i < namesCells.length; i++) {
@@ -62,18 +90,30 @@ for (let i = 0; i < namesCells.length; i++) {
 		taskCells[j].dataset.executor = executors[i]['id'];
 	}
 }
+function jValue(i) {								//Вспомогательная функция
+	j = i*7;
+	return j;
+}
 
-tagAssignment(taskCells, daysCells);								//Функция по добавлению всем ячейкам дней атрибута даты
+tagAssignment(taskCells, daysCells);						//Функция по добавлению всем ячейкам дней атрибута даты
+function tagAssignment(clonetasksweeks, clonedaysweeks) {
+	for (let i = 0, j = 0; i < clonetasksweeks.length; i++, j++) {
+		clonetasksweeks[i].dataset.day = clonedaysweeks[j].innerHTML;
+		if (j == 6) {
+			j = -1;
+		}
+	}
+}
 
 let array = [];
-for (let i = 0; i < tasks.length; i++) {
+for (let i = 0; i < tasks.length; i++) {					//Создаем копию массива tasks, чтобы проводить с ним манипуляции, а именно убирать из него уже имеющиеся в таблице задачи
 	array.push(tasks[i]);
 }
 
-taskCellsFilling();													//Функция по добавлению задач в ячейки дней
+taskCellsFilling();								//Функция по добавлению задач в ячейки дней
 function taskCellsFilling() {
 	if (array.length > 0) {
-		divs = document.querySelectorAll('.taskStyle');
+		divs = document.querySelectorAll('.objectives');
 		for (let i = 0; i < divs.length; i++) {
 			for (let j = 0; j < array.length; j++) {
 				if (divs[i].dataset.id == array[j]['id']) {
@@ -99,7 +139,7 @@ function taskCellsFilling() {
 	dragDropEvents();
 }
 
-backlogFilling();													//Функция по добавлению задач в backlog
+backlogFilling();								//Функция по добавлению задач в backlog
 function backlogFilling() {
 	taskCells = document.querySelectorAll('.taskCells');
 	for (let i = 0; i < array.length; i++) {
@@ -110,11 +150,11 @@ function backlogFilling() {
 	dragDropEvents();
 }
 
-function elementCreation(i) {										//Функция по созданию блоков задач
+function elementCreation(i) {							//Функция по созданию блоков задач
 	let div = document.createElement('div');
 	let h3 = document.createElement('h3');
 	let p = document.createElement('p');
-	div.classList.add('taskStyle');
+	div.classList.add('objectives');
 	div.title = "Срок сдачи: "+array[i]['planEndDate'];
 	div.dataset.start = array[i]['planStartDate'];
 	div.dataset.id = array[i]['id'];
@@ -127,11 +167,10 @@ function elementCreation(i) {										//Функция по созданию б
 	return div;
 }
 
-dragDropEvents();													//Функция по добавлению эффекта перетаскивания
-function dragDropEvents() {
+function dragDropEvents() {							//Функция по добавлению эффекта перетаскивания
 	backlog = document.querySelector('#backlog');
 	taskCells = document.querySelectorAll('.taskCells');
-	taskStyle = document.querySelectorAll('.taskStyle');
+	objectives = document.querySelectorAll('.objectives');
 	namesCells = document.querySelectorAll('.namesCells');
 	let temp;
 
@@ -142,7 +181,7 @@ function dragDropEvents() {
 		names.addEventListener('drop', dragDropRedirect);
 		names.addEventListener('dragover', dragOver);
 	}
-	for (let task of taskStyle) {
+	for (let task of objectives) {
 		task.addEventListener('dragstart', dragStart);
 		task.addEventListener('dragend', dragEnd);
 	}
@@ -176,7 +215,7 @@ function dragDrop() {
 	this.append(temp);
 	this.classList.remove('hovered');
 }
-function dragDropRedirect() {											//Функция перенаправляющая задачи при перетаскивании на имена
+function dragDropRedirect() {							//Функция перенаправляющая задачи в определенные ячейки в соответствии с их начальной датой (при перетаскивании на имена)
 	let executorNumber = this.dataset.executor;
 	for (let task of taskCells) {
 		if (task.dataset.executor == executorNumber && task.dataset.day == temp.dataset.start) {
@@ -185,29 +224,84 @@ function dragDropRedirect() {											//Функция перенаправл�
 	}
 }
 
-function mobileCheck() {												//Функция проверки размера экрана (таймер для отслеживания изменений в реальном времени)
-	setInterval(asd,0);
-}
-function asd() {
-	let wrapper = document.querySelector('#wrapper');
-	if (body.clientWidth <= 1024) {
-		backlog.style.cssText += "display: none;";
-		wrapper.style.cssText += "width: 100%;";
+let next = document.querySelector('#next');
+let prev = document.querySelector('#prev');
+let table = document.querySelector('#table');
+let startDateForward = Number(daysCells[daysCells.length - 1].innerHTML.slice(-2))+1;		//Стартовая дата для последующих недель
+let startDateBackward = Number(daysCells[0].innerHTML.slice(-2))-7;				//Стартовая дата для предыдущих недель
+
+next.addEventListener('click', goingForward);
+prev.addEventListener('click', goingBackward);
+
+let k = 0;
+function goingForward() {							//Функция переключения недель вперед
+	weeks = document.querySelectorAll('.weeks');
+	if (weeks[k] == weeks[weeks.length - 1]) {
+		weeks[k].setAttribute('class', 'weeks hide');
+		let clone = weeks[k].cloneNode(true);
+		clone.setAttribute('class', 'weeks active');
+		
+		let clonedaysweeks = clone.querySelectorAll('.daysCells');
+		let clonetasksweeks = clone.querySelectorAll('.taskCells');
+		
+		for (let days of clonedaysweeks) {
+			days.innerHTML = "";
+		}
+		for (let tasks of clonetasksweeks) {
+			tasks.innerHTML = "";
+		}
+		
+		for (let i = 0; i <  clonedaysweeks.length; i++) {
+			clonedaysweeks[i].innerHTML = forwardBackwardDates(i, startDateForward);
+		}
+		startDateForward = startDateForward + 7;
+		tagAssignment(clonetasksweeks, clonedaysweeks);
+		table.appendChild(clone);
+		k++;
+		dragDropEvents();
+	} else {
+		weeks[k].setAttribute('class', 'weeks hide');
+		weeks[k+1].setAttribute('class', 'weeks active');
+		k++;
 	}
-	if (body.clientWidth > 1024) {
-		backlog.style.cssText += "display: block;";
-		wrapper.style.cssText += "width: 70vw;";
+	taskCellsFilling();
+}
+
+function goingBackward() {							//Функция переключения недель назад
+	weeks = document.querySelectorAll('.weeks');
+	if (weeks[k] == weeks[0]) {
+		weeks[k].setAttribute('class', 'weeks hide');
+		let clone = weeks[k].cloneNode(true);
+		clone.setAttribute('class', 'weeks active');
+		
+		let clonedaysweeks = clone.querySelectorAll('.daysCells');
+		let clonetasksweeks = clone.querySelectorAll('.taskCells');
+		
+		for (let days of clonedaysweeks) {
+			days.innerHTML = "";
+		}
+		for (let tasks of clonetasksweeks) {
+			tasks.innerHTML = "";
+		}
+		
+		for (let i = 0; i <  clonedaysweeks.length; i++) {
+			clonedaysweeks[i].innerHTML = forwardBackwardDates(i, startDateBackward);
+		}
+		startDateBackward = startDateBackward - 7;
+		tagAssignment(clonetasksweeks, clonedaysweeks);
+		table.prepend(clone);
+		k = 0;
+		dragDropEvents();
+	} else {
+		weeks[k].setAttribute('class', 'weeks hide');
+		weeks[k-1].setAttribute('class', 'weeks active');
+		k--;
 	}
+	taskCellsFilling();
 }
-function fillDate(i) {													//Функция заполнения первоначальной даты
-	let data = new Date();
-	let year = data.getFullYear();
-	let month = data.getMonth()+1;
-	let date = data.getDate()+i;
-	return (year+"-"+addZero(month)+"-"+addZero(date));
-}
-function forwardBackwardDates(i, startdate) {							//Функция заполнения дат (два объекта потому что при смене месяцев посреди недели [внутри цикла] js некорректно отображал дату)
-	let data1 = new Date(2021, 09, startdate);							//Например, можно было получить 33 ноября
+
+function forwardBackwardDates(i, startdate) {					//Функция заполнения дат (два объекта потому что при смене месяцев посреди недели [внутри цикла] js некорректно отображал дату)
+	let data1 = new Date(2021, 09, startdate);				//Например, можно было получить 33 ноября
 	let year = data1.getFullYear();
 	let month = data1.getMonth();
 	let date = data1.getDate() + i;
@@ -216,98 +310,4 @@ function forwardBackwardDates(i, startdate) {							//Функция запол�
 	let month2 = data2.getMonth();
 	let date2 = data2.getDate();
 	return year2+"-"+addZero(month2+1)+"-"+addZero(date2);
-}
-function addZero(n) {													//Функция по добавления нуля перед однозначными датами
-	if (n < 10) {
-		n = "0" + n;
-	}
-	return n;
-}
-function jValue(i) {													//Вспомогательная функция
-	j = i*7;
-	return j;
-}
-function tagAssignment(clonetaskscells, clonedayscells) {				//Функция по добавлению всем новым ячейкам дней атрибута даты
-	for (let i = 0, j = 0; i < clonetaskscells.length; i++, j++) {
-		clonetaskscells[i].dataset.day = clonedayscells[j].innerHTML;
-		if (j == 6) {
-			j = -1;
-		}
-	}
-}
-
-let next = document.querySelector('#next');
-let prev = document.querySelector('#prev');
-let slider_track = document.querySelector('#slider_track');
-let startDateForward = Number(daysCells[daysCells.length - 1].innerHTML.slice(-2))+1;		//Стартовая дата для последующих недель
-let startDateBackward = Number(daysCells[0].innerHTML.slice(-2))-7;							//Стартовая дата для предыдущих недель
-
-next.addEventListener('click', goingForward);
-prev.addEventListener('click', goingBackward);
-
-let k = 0;
-function goingForward() {																	//Функция переключения недель вперед
-	cells = document.querySelectorAll('.cells');
-	if (cells[k] == cells[cells.length - 1]) {
-		cells[k].setAttribute('class', 'cells hide');
-		let clone = cells[k].cloneNode(true);
-		clone.setAttribute('class', 'cells active');
-		
-		let clonedayscells = clone.querySelectorAll('.daysCells');
-		let clonetaskscells = clone.querySelectorAll('.taskCells');
-		
-		for (let days of clonedayscells) {
-			days.innerHTML = "";
-		}
-		for (let tasks of clonetaskscells) {
-			tasks.innerHTML = "";
-		}
-		
-		for (let i = 0; i <  clonedayscells.length; i++) {
-			clonedayscells[i].innerHTML = forwardBackwardDates(i, startDateForward);
-		}
-		startDateForward = startDateForward + 7;
-		tagAssignment(clonetaskscells, clonedayscells);
-		slider_track.appendChild(clone);
-		k++;
-		dragDropEvents();
-	} else {
-		cells[k].setAttribute('class', 'cells hide');
-		cells[k+1].setAttribute('class', 'cells active');
-		k++;
-	}
-	taskCellsFilling();
-}
-
-function goingBackward() {																	//Функция переключения дней назад
-	cells = document.querySelectorAll('.cells');
-	if (cells[k] == cells[0]) {
-		cells[k].setAttribute('class', 'cells hide');
-		let clone = cells[k].cloneNode(true);
-		clone.setAttribute('class', 'cells active');
-		
-		let clonedayscells = clone.querySelectorAll('.daysCells');
-		let clonetaskscells = clone.querySelectorAll('.taskCells');
-		
-		for (let days of clonedayscells) {
-			days.innerHTML = "";
-		}
-		for (let tasks of clonetaskscells) {
-			tasks.innerHTML = "";
-		}
-		
-		for (let i = 0; i <  clonedayscells.length; i++) {
-			clonedayscells[i].innerHTML = forwardBackwardDates(i, startDateBackward);
-		}
-		startDateBackward = startDateBackward - 7;
-		tagAssignment(clonetaskscells, clonedayscells);
-		slider_track.prepend(clone);
-		k = 0;
-		dragDropEvents();
-	} else {
-		cells[k].setAttribute('class', 'cells hide');
-		cells[k-1].setAttribute('class', 'cells active');
-		k--;
-	}
-	taskCellsFilling();
 }
