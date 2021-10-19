@@ -2,7 +2,7 @@ body {position: relative;}
 h2 {margin: 0 0 10px 0;}
 h3 {margin: 5px 10px; font-size: 15px;}
 p {margin: 0 10px 5px 10px; font-size: 14px;}
-.cells {
+.weeks {
 	grid-template-columns: repeat(8, 1fr);
 	min-width: 100%;
 }
@@ -55,13 +55,13 @@ p {margin: 0 10px 5px 10px; font-size: 14px;}
 	width: 70vw;
 	position: relative;
 }
-#slider {
+#container {
 	overflow: hidden;
 }
-#slider_track {
+#table {
 	display: flex;
 }
-#slider_buttons div {
+#buttons div {
     width: 150px;
     height: 50px;
 	display: flex;
@@ -74,7 +74,7 @@ p {margin: 0 10px 5px 10px; font-size: 14px;}
 	user-select: none;
 	cursor: pointer;
 }
-#slider_buttons div:hover, #slider_buttons div:active {box-shadow: 1px 1px 6px 0px rgb(72 23 12 / 50%);}
+#buttons div:hover, #buttons div:active {box-shadow: 1px 1px 6px 0px rgb(72 23 12 / 50%);}
 #prev {left: 0px;}
 #next {right: 0px;}
 #backlog {
@@ -88,7 +88,7 @@ p {margin: 0 10px 5px 10px; font-size: 14px;}
 	color: white;
 	padding: 10px;
 }
-.taskStyle {
+.objectives {
 	min-height: 50px;
 	height: 100%;
     background: white;
