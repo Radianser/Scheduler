@@ -24,7 +24,7 @@ let body = document.querySelector('body');
 let backlog = document.querySelector('#backlog');
 
 mobileCheck();
-function mobileCheck() {											//Функция проверки размера экрана (таймер для отслеживания изменений в реальном времени)
+function mobileCheck() {									//Функция проверки размера экрана (таймер для отслеживания изменений в реальном времени)
 	setInterval(asd,0);
 }
 function asd() {
@@ -39,7 +39,7 @@ function asd() {
 	}
 }
 
-let weeks = document.querySelector('.weeks');						//Создаем все ячейки таблицы
+let weeks = document.querySelector('.weeks');							//Создаем все ячейки таблицы
 for (let i = 0; i <= executors.length; i++) {
 	for (let j = 0; j < 8; j++) {
 		let tmp = document.createElement('div');
@@ -48,49 +48,49 @@ for (let i = 0; i <= executors.length; i++) {
 	}
 }
 
-let taskCells = document.querySelectorAll('.taskCells');			//Назначаем ячейки дат
+let taskCells = document.querySelectorAll('.taskCells');					//Назначаем ячейки дат
 for (let i = 0; i < 8; i++) {
 	taskCells[i].setAttribute('class', 'daysCells');
 }
 
-let divs = document.querySelectorAll('.weeks div');					//Назначаем ячейки имен
+let divs = document.querySelectorAll('.weeks div');						//Назначаем ячейки имен
 for (let i = 8; i < divs.length; i += 8) {
 	divs[i].setAttribute('class', 'namesCells');
 }
 
-let namesCells = document.querySelectorAll('.namesCells');			//Заполняем ячейки имен
+let namesCells = document.querySelectorAll('.namesCells');					//Заполняем ячейки имен
 for (let i = 0; i < namesCells.length; i++) {
 	namesCells[i].innerHTML = executors[i]["surname"];
 	namesCells[i].dataset.executor = executors[i]["id"];
 }
 
-let daysCells = document.querySelectorAll('.daysCells');			//Заполняем ячейки дат
+let daysCells = document.querySelectorAll('.daysCells');					//Заполняем ячейки дат
 daysCells[0].setAttribute('class', 'firstGrayCell');
 daysCells = document.querySelectorAll('.daysCells');
 for (let i = 0; i < daysCells.length; i++) {
 	daysCells[i].innerHTML = fillDate(i);
 }
-function fillDate(i) {												//Функция заполнения первоначальной даты
+function fillDate(i) {										//Функция заполнения первоначальной даты
 	let data = new Date();
 	let year = data.getFullYear();
 	let month = data.getMonth()+1;
 	let date = data.getDate()+i;
 	return (year+"-"+addZero(month)+"-"+addZero(date));
 }
-function addZero(n) {												//Функция по добавления нуля перед однозначными датами
+function addZero(n) {										//Функция по добавления нуля перед однозначными датами
 	if (n < 10) {
 		n = "0" + n;
 	}
 	return n;
 }
 
-taskCells = document.querySelectorAll('.taskCells');				//Добавляем всем ячейкам дней атрибут executor
+taskCells = document.querySelectorAll('.taskCells');						//Добавляем всем ячейкам дней атрибут executor
 for (let i = 0; i < namesCells.length; i++) {
 	for (let j = jValue(i); j < jValue(i)+7; j++) {
 		taskCells[j].dataset.executor = executors[i]['id'];
 	}
 }
-function jValue(i) {												//Вспомогательная функция
+function jValue(i) {										//Вспомогательная функция
 	j = i*7;
 	return j;
 }
@@ -110,7 +110,7 @@ for (let i = 0; i < tasks.length; i++) {							//Создаем копию ма�
 	array.push(tasks[i]);
 }
 
-taskCellsFilling();													//Функция по добавлению задач в ячейки дней
+taskCellsFilling();										//Функция по добавлению задач в ячейки дней
 function taskCellsFilling() {
 	if (array.length > 0) {
 		divs = document.querySelectorAll('.objectives');
@@ -139,7 +139,7 @@ function taskCellsFilling() {
 	dragDropEvents();
 }
 
-backlogFilling();													//Функция по добавлению задач в backlog
+backlogFilling();										//Функция по добавлению задач в backlog
 function backlogFilling() {
 	taskCells = document.querySelectorAll('.taskCells');
 	for (let i = 0; i < array.length; i++) {
@@ -150,7 +150,7 @@ function backlogFilling() {
 	dragDropEvents();
 }
 
-function elementCreation(i) {										//Функция по созданию блоков задач
+function elementCreation(i) {									//Функция по созданию блоков задач
 	let div = document.createElement('div');
 	let h3 = document.createElement('h3');
 	let p = document.createElement('p');
@@ -167,7 +167,7 @@ function elementCreation(i) {										//Функция по созданию б
 	return div;
 }
 
-function dragDropEvents() {											//Функция по добавлению эффекта перетаскивания
+function dragDropEvents() {									//Функция по добавлению эффекта перетаскивания
 	backlog = document.querySelector('#backlog');
 	taskCells = document.querySelectorAll('.taskCells');
 	objectives = document.querySelectorAll('.objectives');
@@ -215,7 +215,7 @@ function dragDrop() {
 	this.append(temp);
 	this.classList.remove('hovered');
 }
-function dragDropRedirect() {											//Функция перенаправляющая задачи в определенные ячейки в соответствии с их начальной датой (при перетаскивании на имена)
+function dragDropRedirect() {									//Функция перенаправляющая задачи в определенные ячейки в соответствии с их начальной датой (при перетаскивании на имена)
 	let executorNumber = this.dataset.executor;
 	for (let task of taskCells) {
 		if (task.dataset.executor == executorNumber && task.dataset.day == temp.dataset.start) {
@@ -229,13 +229,13 @@ let prev = document.querySelector('#prev');
 let table = document.querySelector('#table');
 
 let startDateForward = Number(daysCells[daysCells.length - 1].innerHTML.slice(-2))+1;		//Стартовая дата для последующих недель
-let startDateBackward = Number(daysCells[0].innerHTML.slice(-2))-7;							//Стартовая дата для предыдущих недель
+let startDateBackward = Number(daysCells[0].innerHTML.slice(-2))-7;				//Стартовая дата для предыдущих недель
 
 next.addEventListener('click', goingForward);
 prev.addEventListener('click', goingBackward);
 
 let k = 0;
-function goingForward() {																	//Функция переключения недель вперед
+function goingForward() {									//Функция переключения недель вперед
 	weeks = document.querySelectorAll('.weeks');
 	if (weeks[k] == weeks[weeks.length - 1]) {
 		weeks[k].setAttribute('class', 'weeks hide');
@@ -268,7 +268,7 @@ function goingForward() {																	//Функция переключен�
 	taskCellsFilling();
 }
 
-function goingBackward() {																	//Функция переключения недель назад
+function goingBackward() {									//Функция переключения недель назад
 	weeks = document.querySelectorAll('.weeks');
 	if (weeks[k] == weeks[0]) {
 		weeks[k].setAttribute('class', 'weeks hide');
@@ -303,8 +303,8 @@ function goingBackward() {																	//Функция переключен
 
 let actualMonth = Number(daysCells[0].innerHTML.substr(5, 2)) - 1;
 let actualYear = Number(daysCells[0].innerHTML.substr(0, 4));
-function forwardBackwardDates(i, startdate) {												//Функция заполнения дат (два объекта потому что при смене месяцев посреди недели [внутри цикла] js некорректно отображал дату)
-	let data1 = new Date(actualYear, actualMonth, startdate);								//Например, можно было получить 33 ноября
+function forwardBackwardDates(i, startdate) {							//Функция заполнения дат (два объекта потому что при смене месяцев посреди недели [внутри цикла] js некорректно отображал дату)
+	let data1 = new Date(actualYear, actualMonth, startdate);				//Например, можно было получить 33 ноября
 	let year = data1.getFullYear();
 	let month = data1.getMonth();
 	let date = data1.getDate() + i;
