@@ -1,34 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Scheduler</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-
-
-
-<div id="wrapper">
-	<div id="container">
-		<div id="table">
-			<div class="weeks active"></div>
+	<head>
+		<title>Scheduler</title>
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1" name="viewport" />
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="container">
+				<div id="table"></div>
+				<div id="buttons">
+					<div id="prev">previous</div>
+					<div id="next">next</div>
+				</div>
+			</div>
+			<div id="backlog">
+				<h2>Backlog</h2>
+			</div>
 		</div>
-	</div>
-	<div id="buttons">
-		<div id="prev">пред.</div>
-		<div id="next">след.</div>
-	</div>
-</div>
-
-<div id="backlog">
-	<h2>Backlog</h2>
-</div>
-
-
-
-
-
-<script defer type="text/javascript" src="script.js"></script>
-</body>
+		<!-- <script defer type="module" src="script.js"></script> -->
+		<script defer type="module" src="module.js"></script>
+	</body>
 </html>
