@@ -1,13 +1,46 @@
-body {position: relative;}
-h2 {margin: 0 0 10px 0;}
-h3 {margin: 5px 10px; font-size: 15px;}
-p {margin: 0 10px 5px 10px; font-size: 14px;}
-.weeks {
+body {
+	margin: 15px;
+}
+h3, p {
+	font-size: 14px;
+	margin: 5px 10px;
+}
+h3 {
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+p {
+	word-wrap: normal;
+}
+#wrapper {
+	display: flex;
+	justify-content: space-between;
+}
+#container {
+	width: 80%;
+	margin-right: 15px;
+	padding: 10px 10px 0 10px;
+}
+#table {
+	overflow: hidden;
+    border-radius: 40px;
+    outline: 5px solid #555555;
+    outline-offset: 5px;
+	background-color: white;
+}
+#table > div {
 	grid-template-columns: repeat(8, 1fr);
 	min-width: 100%;
+	gap: 5px;
 }
-.firstGrayCell {
+.firstGrayCell, .dateCells {
 	background: #555555;
+	font-size: 1vw;
+	color: white;
+	text-align: center;
+	padding: 20px;
+	margin: 0 -5px;
 }
 .namesCells {
 	display: flex;
@@ -16,50 +49,22 @@ p {margin: 0 10px 5px 10px; font-size: 14px;}
 	font-size: 1.4vw;
 	font-weight: bold;
 	color: #555555;
-	background: gold;
+	background: white;
 	padding: 20px;
-	min-height: 88px;
 	outline: 1px solid #555555;
-}
-.days {
-	display: flex;
-	justify-content: flex-end;
-	font-size: 2vw;
-	text-align: center;
-}
-.daysCells {
-	display: flex;
-	justify-content: center;
-    align-items: center;
-	font-size: 1vw;
-	color: white;
-	background: #555555;
-	text-align: center;
-	padding: 20px;
+	border-radius: 0 15px 15px 0;
 }
 .taskCells {
-	display: grid;
-	grid-template-rows: 1fr;
-	grid-template-columns: 1fr;
-	background: #fff8d0;
+    height: 100px;
+	background: #7f8ec9;
 	align-items: center;
-	outline: 1px solid #555555;
+	border-radius: 15px;
+    overflow: auto;
 }
-#names div {
-	font-size: 2vw;
-	background: gold;
-	text-align: center;
-	padding: 20px;
-}
-#wrapper {
-	width: 70vw;
-	position: relative;
-}
-#container {
-	overflow: hidden;
-}
-#table {
+#buttons {
 	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
 }
 #buttons div {
     width: 150px;
@@ -67,38 +72,63 @@ p {margin: 0 10px 5px 10px; font-size: 14px;}
 	display: flex;
 	justify-content: center;
     align-items: center;
-    position: absolute;
-    bottom: -60px;
-	color: white;
+    color: white;
     background: #555555;
 	user-select: none;
 	cursor: pointer;
+	border-radius: 15px;
+	
 }
-#buttons div:hover, #buttons div:active {box-shadow: 1px 1px 6px 0px rgb(72 23 12 / 50%);}
+#buttons div:hover {
+	color: #555555;
+	background: white;
+	outline: 1px solid #555555;
+	transition: all ease 0.3s;
+}
+#buttons div:active {
+	outline: 2px solid #7f8ec9;
+	outline-offset: 1px;
+}
 #prev {left: 0px;}
 #next {right: 0px;}
 #backlog {
-	width: 20vw;
-	min-height: 370px;
-	border: 1px solid black;
-	position: absolute;
-	right: 0;
-	top: 0;
+	width: 20%;
+	max-height: 585px;
 	background: #555555;
 	color: white;
 	padding: 10px;
+    border-radius: 15px;
+	overflow: overlay;
+}
+#backlog h2 {
+	text-align: center;
 }
 .objectives {
-	min-height: 50px;
 	height: 100%;
     background: white;
     color: #555555;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-	outline: 1px solid gray;
+	padding: 10px;
+    box-sizing: border-box;
 	cursor: all-scroll;
+	border-radius: 15px;
+	outline: 1px solid #555555;
+    outline-offset: -1px;
+	overflow: overlay;
+}
+#backlog > .objectives {
+	max-height: 70px;
+    margin-bottom: 5px;
 }
 .active {display: grid;}
 .hide {display: none;}
 .hovered {background: white;}
+
+@media (max-width: 1024px) {
+	#backlog {
+		display: none;
+	}
+	#container {
+		width: 100%;
+		margin-right: 0;
+	}
+}
